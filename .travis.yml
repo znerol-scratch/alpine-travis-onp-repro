@@ -9,3 +9,4 @@ services:
 jobs:
   include:
     - script: docker build -f Dockerfile.edge .
+    - script: docker build -f Dockerfile.latest .
