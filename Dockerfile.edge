@@ -1,4 +1,20 @@
-FROM alpine:edge
+ARG alpine_version=edge
 
+FROM alpine:${alpine_version} as base
 RUN apk update && apk upgrade
-RUN install -D -m 0755 /bin/busybox /dist/bin/busybox
+
+#
+# git-gau build stage
+#
+FROM base as gitgau-build
+
+RUN apk add --no-cache make
+
+RUN mkdir /src /dist
+
+ARG gitgau_ref=develop
+ENV gitgau_ref ${gitgau_ref}
+
+ADD "https://codeload.github.com/znerol/git-gau/tar.gz/${gitgau_ref}" /src/git-gau-src.tar.gz
+RUN tar -o -C /src -xf /src/git-gau-src.tar.gz
+RUN make -C /src/git-gau-* prefix=/dist install-bin

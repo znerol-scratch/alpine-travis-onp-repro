@@ -1,4 +1,0 @@
-FROM alpine:3.13.2
-
-RUN apk update && apk upgrade
-RUN install -D -m 0755 /bin/busybox /dist/bin/busybox
