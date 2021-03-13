@@ -6,4 +6,5 @@ RUN mkdir /src /dist
 
 ADD "https://codeload.github.com/znerol/git-gau/tar.gz/develop" /src/git-gau-src.tar.gz
 RUN tar -o -C /src -xf /src/git-gau-src.tar.gz
-RUN make -d -C /src/git-gau-* prefix=/dist install-bin
+WORKDIR /src/git-gau-develop
+RUN make -d prefix=/dist install-bin
