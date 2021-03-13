@@ -4,8 +4,5 @@ RUN apk update && apk upgrade
 RUN apk add --no-cache make
 RUN mkdir /src /dist
 
-ADD "https://codeload.github.com/znerol/git-gau/tar.gz/develop" /src/git-gau-src.tar.gz
-RUN tar -o -C /src -xf /src/git-gau-src.tar.gz
-WORKDIR /src/git-gau-develop
-RUN install -m 0755 -D bin/git-gau-ac /dist/bin/git-gau-ac
-#RUN make -d prefix=/dist install-bin
+COPY Makefile /src/Makefile
+RUN make -C /src install-bin
