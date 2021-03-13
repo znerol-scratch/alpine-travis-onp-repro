@@ -1,20 +1,9 @@
-ARG alpine_version=edge
-
-FROM alpine:${alpine_version} as base
+FROM alpine:edge
 RUN apk update && apk upgrade
 
-#
-# git-gau build stage
-#
-FROM base as gitgau-build
-
 RUN apk add --no-cache make
-
 RUN mkdir /src /dist
 
-ARG gitgau_ref=develop
-ENV gitgau_ref ${gitgau_ref}
-
-ADD "https://codeload.github.com/znerol/git-gau/tar.gz/${gitgau_ref}" /src/git-gau-src.tar.gz
+ADD "https://codeload.github.com/znerol/git-gau/tar.gz/develop" /src/git-gau-src.tar.gz
 RUN tar -o -C /src -xf /src/git-gau-src.tar.gz
-RUN make -C /src/git-gau-* prefix=/dist install-bin
+RUN make -d -C /src/git-gau-* prefix=/dist install-bin
